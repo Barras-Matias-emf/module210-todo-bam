@@ -1,5 +1,5 @@
 // Use the MariaDB Node.js Connector
-var mariadb = require('mariadb');
+var mysql = require('mysql');
 
 require('dotenv').config();
 
@@ -11,12 +11,12 @@ require('dotenv').config();
 
 // Create a connection pool
 var pool = 
-  mariadb.createPool({
-    host: process.env.DB_HOST, 
-    user: process.env.DB_USER, 
-    password: process.env.DB_PASS,
-    port: process.env.DB_PORT,
-    database: process.env.DB_NAME //,
+mysql.createPool({
+    host: "sql-210-300621-matia-barras.mysql.database.azure.com", 
+    user: "todo_user", 
+    password: "Emf123456",
+    port: "3306",
+    database: "todo_app"//,
     // 3.) Add an "ssl" property to the connection pool configuration, using the serverCert const defined above
     /*ssl: {
       ca: serverCert
