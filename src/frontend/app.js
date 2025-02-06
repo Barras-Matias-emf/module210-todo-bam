@@ -1,4 +1,4 @@
-const apiEndpoint = "http://4.245.217.219:8080/api/tasks";
+const apiEndpoint = "https://cont-210-300621-matias-barras.internal.salmonhill-8fba340d.westus2.azurecontainerapps.io";
 
 $(document).ready(function () {
   // Charger les tâches au démarrage
