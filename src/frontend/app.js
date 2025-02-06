@@ -1,4 +1,4 @@
-const apiEndpoint = "https://cont-210-300621-matias-barras.internal.salmonhill-8fba340d.westus2.azurecontainerapps.io";
+const apiEndpoint = "https://cont-210-300621-matias-barras2.orangemushroom-1e4c2f37.westus2.azurecontainerapps.io";
 
 $(document).ready(function () {
   // Charger les tâches au démarrage
