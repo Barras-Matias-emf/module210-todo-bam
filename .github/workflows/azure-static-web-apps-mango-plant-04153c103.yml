@@ -60,14 +60,18 @@ jobs:
           output_location: "." # Built app content directory - optional
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
-      - uses: actions/checkout@v3
+      - name: Lighthouse CI
+      - uses: actions/checkout@v3  # Utilisation de l'action officielle pour le checkout du repo
+
       - name: LightHouse
-        with:
-          fetch-depth: 0
+        run: npm install -g @lhci/cli@0.7.x  # Installer Lighthouse CI
+
       - name: Installer les dépendances
-        run: npm install -g @lhci/cli@0.7.x
+        run: npm install  # Installer les dépendances du projet (si besoin)
+
       - name: Exécuter Lighthouse CI
-        run: lhci autorun --config=.github/workflows/lighthouserc.json
+        run: lhci autorun --config=.github/workflows/lighthouserc.json  # Exécution de Lighthouse avec config personnalisée
+
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
