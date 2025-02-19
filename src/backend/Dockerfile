@@ -9,6 +9,6 @@ RUN npm install
 # Copier le reste des fichiers de l'application dans le conteneur
 COPY . .
 # Exposer le port utilisé par l'application
-EXPOSE 8088
+EXPOSE 8080
 # Démarrer l'application
 CMD [ "npm", "start" ]
