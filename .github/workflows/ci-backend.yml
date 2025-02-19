@@ -18,5 +18,6 @@ jobs:
       - name: Docker login
         run: |
           docker login -u quentin.badoud@edufr.ch -p ${{ secrets.PWDREGISTRY }} $REG_NAME
-          docker build -f src/backend/Dockerfile -t $REG_NAME/$IMAGE_NAME:latest .
-          docker push $REG_NAME/$IMAGE_NAME:latest
+          docker build -f src/backend/Dockerfile -t $IMAGE_NAME:bam .
+          docker tag $IMAGE_NAME:bam $REG_NAME/c213-emf/$IMAGE_NAME:bam
+          docker push $REG_NAME/c213-emf/$IMAGE_NAME:bam
