@@ -60,13 +60,14 @@ jobs:
           output_location: "." # Built app content directory - optional
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
-      - uses: actions/checkout@v4
-      - name: Audit URLs using Lighthouse
-        uses: treosh/lighthouse-ci-action@v12
+      - uses: actions/checkout@v3
+      - name: LightHouse
         with:
-          urls: https://todo-app3.matiasbarras.emf-informatique.ch/
-          configPath: '.github/workflows/lighthouserc.json'
-          temporaryPublicStorage: true # upload lighthouse report to the temporary storage
+          fetch-depth: 0
+      - name: Installer les dépendances
+        run: npm install -g @lhci/cli@0.7.x
+      - name: Exécuter Lighthouse CI
+        run: lhci autorun --config=.github/workflows/lighthouserc.json
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
