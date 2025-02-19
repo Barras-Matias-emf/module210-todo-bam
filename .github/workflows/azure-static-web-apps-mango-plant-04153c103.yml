@@ -46,7 +46,7 @@ jobs:
             return await coredemo.getIDToken()
           result-encoding: string
 
-      - name: Vérifier si index.html est présent
+      - name: Vérifier si index.html est présent (html)
         id: check_index
         run: |
           if [ -f "src/frontend/index.html" ]; then
