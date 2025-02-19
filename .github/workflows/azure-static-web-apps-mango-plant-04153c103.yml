@@ -17,24 +17,50 @@ jobs:
     permissions:
        id-token: write
        contents: read
+
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
           submodules: true
           lfs: false
+
+      - name: Vérifier si le fichier config.json est présent
+        id: check_config
+        run: |
+          if [ -f "src/frontend/config.json" ]; then
+            echo "exists=true" >> $GITHUB_ENV
+          else
+            echo "❌ Le fichier src/frontend/config.json est manquant !"
+            exit 1  # Arrête le workflow si le fichier n'existe pas
+          fi
+
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
+
       - name: Get Id Token
         uses: actions/github-script@v6
         id: idtoken
         with:
-           script: |
-               const coredemo = require('@actions/core')
-               return await coredemo.getIDToken()
-           result-encoding: string
+          script: |
+            const coredemo = require('@actions/core')
+            return await coredemo.getIDToken()
+          result-encoding: string
+
+      - name: Vérifier si index.html est présent
+        id: check_index
+        run: |
+          if [ -f "src/frontend/index.html" ]; then
+            echo "✅ Le fichier index.html existe"
+          else
+            echo "❌ Erreur : index.html n’existe pas !"
+            exit 1  # Arrête le workflow si index.html est absent
+          fi
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
+        if: env.exists == 'true'  # Exécute seulement si config.json est présent
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_MANGO_PLANT_04153C103 }}
           action: "upload"
