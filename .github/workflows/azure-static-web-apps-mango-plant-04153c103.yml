@@ -24,16 +24,7 @@ jobs:
         with:
           submodules: true
           lfs: false
-
-      - name: Vérifier si le fichier config.json est présent
-        id: check_config
-        run: |
-          if [ -f "src/frontend/config.json" ]; then
-            echo "exists=true" >> $GITHUB_ENV
-          else
-            echo "❌ Le fichier src/frontend/config.json est manquant !"
-            exit 1  # Arrête le workflow si le fichier n'existe pas
-
+          
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
 
@@ -54,6 +45,7 @@ jobs:
           else
             echo "❌ Erreur : index.html n’existe pas !"
             exit 1  # Arrête le workflow si index.html est absent
+          fi
 
       - name: Build And Deploy
         id: builddeploy
