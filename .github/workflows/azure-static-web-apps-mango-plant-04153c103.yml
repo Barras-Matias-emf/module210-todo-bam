@@ -61,7 +61,7 @@ jobs:
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
       - name: Lighthouse CI
-      - uses: actions/checkout@v3  # Utilisation de l'action officielle pour le checkout du repo
+        uses: actions/checkout@v3  # Utilisation de l'action officielle pour le checkout du repo
 
       - name: LightHouse
         run: npm install -g @lhci/cli@0.7.x  # Installer Lighthouse CI
