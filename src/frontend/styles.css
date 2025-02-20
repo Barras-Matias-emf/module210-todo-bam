@@ -1,50 +1,137 @@
-/* Général */
+/* Désactive le curseur de base */
+* {
+  cursor: none;
+}
+
+/* 🔥 Arrière-plan animé */
 body {
-  background: linear-gradient(-45deg, #ffffff, #c876ff, #7d19ff, #530083);
+  background: linear-gradient(-45deg, #ffffff, #c876ff, #7a00ff, #530083);
   background-size: 400% 400%;
-  animation: gradient 5s ease infinite;
+  animation: gradient 10s ease infinite;
   height: 100vh;
   margin: 0;
   padding: 0;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  color: #000000;
+  color: #000;
+  position: relative;
 }
 
 @keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-/* Conteneur principal */
+/* Particules animées en arrière-plan */
+#particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: float 6s infinite ease-in-out;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) scale(0.8); opacity: 0.8; }
+  50% { transform: translateY(-100px) scale(1.2); opacity: 1; }
+  100% { transform: translateY(0) scale(0.8); opacity: 0.8; }
+}
+
+/* 🎯 Curseur principal */
+.cursor {
+  position: fixed;
+  width: 14px;
+  height: 14px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1000;
+  transition: transform 0.05s linear, background-color 0.2s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+}
+
+/* 🌌 Effet de traînée (motion blur) */
+.cursor-trail {
+  position: fixed;
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999;
+  filter: blur(15px);
+  transition: transform 0.15s ease-out;
+}
+
+/* 💥 Effet d'expansion au clic */
+.click-effect {
+  transform: scale(2);
+  opacity: 0.5;
+  transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+}
+
+/* 🟡 Effet de survol interactif */
+.interactive {
+  background-color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.2);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+}
+
+/* Import des polices originales */
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@300;400;500&display=swap');
+
+body, button, input, h1 {
+  font-family: 'Roboto', sans-serif;
+}
+
+/* 📦 Conteneur principal */
 .app-container {
-  background: #fff;
+  background: #ffffffd7;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
   text-align: center;
+  position: relative;
+  z-index: 100;
+  animation: fadeIn 2s ease;
 }
 
-/* Titre */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* 🔠 Titre animé */
 .app-container h1 {
-  font-size: 2rem;
+  font-family: 'Pacifico', cursive;
+  font-size: 2.5rem;
   margin-bottom: 1rem;
-  color: #c277ff;
+  color: #d097ff;
   font-weight: bold;
+  animation: slideIn 1s ease-out;
 }
 
-/* Formulaire */
+@keyframes slideIn {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* 📋 Formulaire */
 #todo-form {
   display: flex;
   justify-content: space-between;
@@ -56,7 +143,7 @@ body {
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ddd;
-  border-radius: 8px 0 0 8px;
+  border-radius: 12px;
   outline: none;
   transition: border-color 0.3s ease;
 }
@@ -65,27 +152,66 @@ body {
   border-color: #c28eff;
 }
 
+/* 🔘 Boutons avec effet glow */
 button {
   padding: 10px 15px;
-  background-color: #c17eff;
+  background: #111;
   color: white;
   border: none;
-  border-radius: 0 8px 8px 0;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  outline: none;
+  border-radius: 10px;
+  position: relative;
+  z-index: 1;
+  transition: background-color 0.3s ease, opacity 0.3s ease-in-out, transform 0.1s ease;
 }
 
 button:hover {
-  background-color: #773ff8;
+  background-color: #444;
+  transform: scale(1.05);
 }
 
-/* Liste des tâches */
+button:active {
+  transform: scale(0.95);
+}
+
+/* 🌈 Glow animé sur le bouton */
+button::before {
+  content: '';
+  background: linear-gradient(45deg, 
+    #ff0000, #ff7300, #fffb00, #48ff00, 
+    #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  border-radius: 12px;
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+button:hover::before {
+  opacity: 1;
+}
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
+}
+
+/* 📝 Liste des tâches */
 #todo-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* Transition lors du changement d'état */
 #todo-list li {
   display: flex;
   justify-content: space-between;
@@ -95,7 +221,30 @@ button:hover {
   border-radius: 8px;
   margin-bottom: 10px;
   background: #f9f9f9;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.5s ease, color 0.5s ease;
+  opacity: 0;
+}
+
+/* Animation d'ajout pour les tâches impaires */
+#todo-list li:nth-child(odd) {
+  animation: taskAdd 1s forwards;
+}
+
+/* Animation d'ajout alternative pour les tâches paires */
+#todo-list li:nth-child(even) {
+  animation: taskAddAlt 1s forwards;
+}
+
+@keyframes taskAdd {
+  0% { opacity: 0; transform: translateX(-50px) scale(0.8); }
+  50% { opacity: 0.7; transform: translateX(10px) scale(1.05); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+@keyframes taskAddAlt {
+  0% { opacity: 0; transform: translateX(50px) scale(0.8); }
+  50% { opacity: 0.7; transform: translateX(-10px) scale(1.05); }
+  100% { opacity: 1; transform: translateX(0) scale(1); }
 }
 
 #todo-list li:hover {
@@ -109,7 +258,27 @@ button:hover {
   background: #e6e6e6;
 }
 
-/* Boutons */
+/* Animation pour la suppression de tâche (impaires) */
+#todo-list li.removing:nth-child(odd) {
+  animation: taskDelete 1s forwards;
+}
+
+/* Animation pour la suppression de tâche (paires) */
+#todo-list li.removing:nth-child(even) {
+  animation: taskDeleteAlt 1s forwards;
+}
+
+@keyframes taskDelete {
+  0% { opacity: 1; transform: translateX(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateX(50px) rotate(15deg); }
+}
+
+@keyframes taskDeleteAlt {
+  0% { opacity: 1; transform: translateX(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateX(-50px) rotate(-15deg); }
+}
+
+/* ❌ Bouton Supprimer */
 .delete-btn {
   background: none;
   border: none;
@@ -123,7 +292,7 @@ button:hover {
   color: #b78aff;
 }
 
-/* Checkboxes */
+/* ✅ Checkboxes */
 .task-toggle {
   margin-right: 10px;
   transform: scale(1.2);
@@ -136,12 +305,10 @@ button:hover {
   #todo-form {
     flex-direction: column;
   }
-
   #todo-input {
     border-radius: 8px;
     margin-bottom: 10px;
   }
-
   button {
     border-radius: 8px;
   }
